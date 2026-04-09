@@ -50,6 +50,3 @@ To build the application for production:
 - Sensitive data is managed via environment variables.
 - `.env` files are ignored by Git.
 - Ensure `JWT_SECRET` and `MONGO_URI` are kept private.
-
----
-*Ready to be pushed to GitHub.*
