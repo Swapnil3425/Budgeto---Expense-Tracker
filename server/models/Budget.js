@@ -7,4 +7,6 @@ const budgetSchema = new mongoose.Schema({
   month: { type: String, required: true }, // "YYYY-MM"
 }, { timestamps: true });
 
+budgetSchema.index({ userId: 1 });
+
 module.exports = mongoose.model('Budget', budgetSchema);

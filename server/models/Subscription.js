@@ -12,4 +12,6 @@ const subscriptionSchema = new mongoose.Schema({
   isActive: { type: Boolean, default: true },
 }, { timestamps: true });
 
+subscriptionSchema.index({ userId: 1 });
+
 module.exports = mongoose.model('Subscription', subscriptionSchema);

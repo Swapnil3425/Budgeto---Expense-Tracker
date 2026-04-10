@@ -17,4 +17,6 @@ const expenseSchema = new mongoose.Schema({
   isRecurring: { type: Boolean, default: false },
 }, { timestamps: true });
 
+expenseSchema.index({ userId: 1, date: -1 });
+
 module.exports = mongoose.model('Expense', expenseSchema);

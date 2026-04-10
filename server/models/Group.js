@@ -18,4 +18,6 @@ const groupSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
+groupSchema.index({ createdBy: 1 });
+
 module.exports = mongoose.model('Group', groupSchema);

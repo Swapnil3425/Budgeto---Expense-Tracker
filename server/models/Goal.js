@@ -10,4 +10,6 @@ const goalSchema = new mongoose.Schema({
   color: { type: String, default: '#FF7733' },
 }, { timestamps: true });
 
+goalSchema.index({ userId: 1 });
+
 module.exports = mongoose.model('Goal', goalSchema);
