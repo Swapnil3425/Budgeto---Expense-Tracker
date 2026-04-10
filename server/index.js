@@ -76,8 +76,8 @@ if (process.env.NODE_ENV === 'production') {
   const distPath = path.join(__dirname, '../client/dist');
   app.use(express.static(distPath));
 
-  // Fix for Express 5: Use (.*) instead of * for the catch-all route
-  app.get('(.*)', (req, res) => {
+  // Fix for Express 5: Use /:any* for the catch-all route
+  app.get('/:any*', (req, res) => {
     res.sendFile(path.resolve(distPath, 'index.html'));
   });
 }
