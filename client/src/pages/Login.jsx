@@ -31,7 +31,8 @@ export default function Login() {
   const handleDemo = () => {
     dispatch(setCredentials({
       token: 'demo-token',
-      user: { id: 'demo', name: 'Demo User', email: 'demo@budgeto.app', currency: '₹', monthlyBudget: 50000 }
+      user: { id: 'demo', name: 'Demo User', email: 'demo@budgeto.app', currency: '₹', monthlyBudget: 50000 },
+      isDemo: true,
     }));
     navigate('/dashboard');
   };

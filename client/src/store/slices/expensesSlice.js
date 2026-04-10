@@ -1,4 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import api from '../../services/api';
+
+export const fetchExpenses = createAsyncThunk('expenses/fetch', async (_, { rejectWithValue }) => {
+  try {
+    const { data } = await api.get('/expenses');
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response?.data?.message || 'Failed to fetch expenses');
+  }
+});
 
 const expensesSlice = createSlice({
   name: 'expenses',
@@ -15,6 +25,20 @@ const expensesSlice = createSlice({
     },
     setLoading: (state, { payload }) => { state.loading = payload; },
     setError: (state, { payload }) => { state.error = payload; },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchExpenses.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchExpenses.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.list = payload;
+      })
+      .addCase(fetchExpenses.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+      });
   },
 });
 

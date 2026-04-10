@@ -1,4 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import api from '../../services/api';
+
+export const fetchGroups = createAsyncThunk('groups/fetch', async (_, { rejectWithValue }) => {
+  try {
+    const { data } = await api.get('/groups');
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response?.data?.message || 'Failed to fetch groups');
+  }
+});
 
 const groupsSlice = createSlice({
   name: 'groups',
@@ -19,6 +29,18 @@ const groupsSlice = createSlice({
       }
     },
     setLoading: (state, { payload }) => { state.loading = payload; },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchGroups.pending, (state) => { state.loading = true; })
+      .addCase(fetchGroups.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.list = payload;
+      })
+      .addCase(fetchGroups.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+      });
   },
 });
 

@@ -10,7 +10,7 @@ import { setExpenses } from '../store/slices/expensesSlice';
 import { formatINR, formatAmount, generateMockExpenses, CATEGORIES, getCategoryInfo } from '../utils/constants';
 import { setShowAddExpense } from '../store/slices/uiSlice';
 
-const STREAK_DAYS = 12;
+const STREAK_DAYS_MOCK = 12;
 
 const KPICard = ({ icon: Icon, label, value, trend, trendUp, color, delay = 0 }) => (
   <motion.div
@@ -60,17 +60,17 @@ const CustomTooltip = ({ active, payload, label }) => {
 export default function Dashboard() {
   const dispatch = useDispatch();
   const expenses = useSelector(s => s.expenses.list);
-  const user = useSelector(s => s.auth.user);
+  const { user, isDemo } = useSelector(s => s.auth);
   const { selected: currencyCode, symbol, rates } = useSelector(s => s.currency);
   const fmt = (v) => formatAmount(v, currencyCode, rates, symbol);
   const [aiInsights, setAiInsights] = useState(null);
-  const [healthScore, setHealthScore] = useState(74);
+  const [healthScore, setHealthScore] = useState(100);
 
   useEffect(() => {
-    if (expenses.length === 0) {
+    if (isDemo && expenses.length === 0) {
       dispatch(setExpenses(generateMockExpenses()));
     }
-  }, []);
+  }, [isDemo, expenses.length, dispatch]);
 
   const monthlyBudget = user?.monthlyBudget || 50000;
   const thisMonthExpenses = expenses.filter(e => {
@@ -244,7 +244,7 @@ export default function Dashboard() {
             animate={{ scale: [1, 1.05, 1] }} transition={{ repeat: Infinity, duration: 2 }}
             style={{ fontSize: 48 }}>🔥</motion.div>
           <div style={{ textAlign: 'center' }}>
-            <p style={{ fontFamily: 'Poppins', fontWeight: 800, fontSize: 28, color: '#FF7733' }}>{STREAK_DAYS}</p>
+            <p style={{ fontFamily: 'Poppins', fontWeight: 800, fontSize: 28, color: '#FF7733' }}>{isDemo ? STREAK_DAYS_MOCK : 0}</p>
             <p style={{ fontSize: 11, color: '#9b8cb0' }}>days within budget</p>
           </div>
           <div style={{ display: 'flex', gap: 3, marginTop: 4 }}>

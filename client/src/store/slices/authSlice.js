@@ -9,14 +9,18 @@ const authSlice = createSlice({
     user: stored ? JSON.parse(stored) : null,
     token: storedToken || null,
     isAuthenticated: !!storedToken,
+    isDemo: false,
   },
   reducers: {
     setCredentials: (state, action) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.isAuthenticated = true;
-      localStorage.setItem('budgeto_user', JSON.stringify(action.payload.user));
-      localStorage.setItem('budgeto_token', action.payload.token);
+      state.isDemo = action.payload.isDemo || false;
+      if (!state.isDemo) {
+        localStorage.setItem('budgeto_user', JSON.stringify(action.payload.user));
+        localStorage.setItem('budgeto_token', action.payload.token);
+      }
     },
     logout: (state) => {
       state.user = null;
