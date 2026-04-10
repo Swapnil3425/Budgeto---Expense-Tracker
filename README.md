@@ -2,8 +2,6 @@
 
 Budgeto is a premium, full-stack financial management platform designed to give you complete control over your money. Combining sleek aesthetics with powerful features like **AI-powered receipt scanning**, **multi-currency support**, and **group expense splitting**, Budgeto turns the chore of expense tracking into an intuitive, data-driven experience.
 
-![Dashboard Preview](https://github.com/Swapnil3425/Budgeto---Expense-Tracker/raw/main/preview.png) *(Note: Add your own screenshot here)*
-
 ## ✨ Key Features
 
 - **📊 Intelligent Dashboard**: Real-time KPI cards for balance, spending, income, and remaining budget with AI-driven financial insights.
