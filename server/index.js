@@ -40,8 +40,8 @@ if (process.env.NODE_ENV === 'production') {
 const allowedOrigins = [
   'http://localhost:5173',
   'http://127.0.0.1:5173',
-  process.env.CLIENT_URL,
-].filter(Boolean);
+  ...(process.env.CLIENT_URL ? process.env.CLIENT_URL.split(',').map(url => url.trim()) : []),
+].filter(Boolean).map(url => url.replace(/\/$/, "")); // Ensure no trailing slashes
 
 app.use(cors({
   origin: (origin, callback) => {
